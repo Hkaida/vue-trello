@@ -3,7 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-Vue.config.productionTip = false
+import '@/assets/css/css.css'
+
+import TMessage from '@/components/TMessage/TMessage.js';
+
+Vue.config.productionTip = false;
+Vue.prototype.$message = TMessage;
 
 new Vue({
   router,
