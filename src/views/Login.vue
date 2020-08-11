@@ -19,7 +19,8 @@
                     <div>
                         <input type="submit" class="btn btn-success" value="登录" />
                         <span class="signin-signup-separator">或者</span>
-                        <input type="button" class="btn" value="注册" />
+                        
+                        <router-link :to="{name: 'Register'}" tag="button" class="btn">注册</router-link>
                     </div>
                 </form>
             </div>

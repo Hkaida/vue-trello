@@ -1,26 +1,7 @@
 <template>
     <div id="home">
         <!--头部-->
-        <header>
-            <div class="left">
-                <a href="" class="btn btn-icon">
-                    <i class="icon icon-home"></i>
-                </a>
-                <a href="" class="btn btn-icon">
-                    <i class="icon icon-board"></i>
-                    <span class="txt">看板</span>
-                </a>
-            </div>
-            <a href="/" class="logo"></a>
-            <div class="right">
-                <a href="" class="btn btn-icon">
-                    <i class="icon icon-add"></i>
-                </a>
-                <button class="avatar">
-                    <span>Z</span>
-                </button>
-            </div>
-        </header>
+        <t-header></t-header>
 
         <main>
 
@@ -29,20 +10,66 @@
                 我的看板
             </h2>
             <ul class="board-items">
-                <li class="board-item">
-                    <span class="title">test</span>
-                </li>
-                <li  class="board-item">
-                    <span class="title">共同努力吧！</span>
-                </li>
-                <li  class="board-item">
-                    <span class="title">Welcome Board</span>
-                </li>
+
+                <router-link
+                    v-for="board of boards"
+                    :key="board.id"
+                    class="board-item"
+                    tag="li"
+                    :to="{name: 'Board', params: {id: board.id}}"
+                >
+                        <span class="title">{{board.name}}</span>
+                </router-link>
+
                 <li  class="board-item create-new-board">
-                    <textarea class="title form-field-input" placeholder="创建新看板"></textarea>
+                    <textarea class="title form-field-input" placeholder="创建新看板" ref="newBoardName" @blur="postBoard"></textarea>
                 </li>
             </ul>
 
         </main>
     </div>
 </template>
+
+<script>
+    import THeader from "@/components/THeader";
+    import {mapState} from 'vuex';
+
+    export default {
+        name: 'Home',
+
+        components: {
+            THeader
+        },
+
+        computed: {
+            ...mapState('board', {
+                boards: state => state.boards,
+                inited: state => state.inited
+            })
+        },
+
+        created() {
+            if (!this.inited) {
+                this.$store.dispatch('board/getBoards');
+            }
+        },
+
+        methods: {
+            postBoard() {
+                let val = this.$refs.newBoardName.value;
+
+                if (val.trim() !== '') {
+                    try {
+                        this.$store.dispatch('board/postBoard', {
+                            name: val
+                        });
+
+                        this.$message.success('面板创建成功');
+
+                        this.$refs.newBoardName.value = '';
+                    } catch (e) {}
+                }
+            }
+        }
+    }
+</script>

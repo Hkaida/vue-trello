@@ -64,9 +64,9 @@
                     this.$router.push({name: 'Login'});
                 }catch (e) {}
             }
-        },
-        components: {
-            TMessage
         }
+        // components: {
+        //     TMessage
+        // }
     }
 </script>

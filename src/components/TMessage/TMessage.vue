@@ -2,7 +2,7 @@
     <transition name="message-fade">
         <div :class="[
             'message',
-            'message-'+type,
+            'message-' + type,
             center ? 'is-center':''
             ]" 
             :style="{top: offset + 'px'}"
