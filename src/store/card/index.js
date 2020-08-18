@@ -40,6 +40,7 @@ export default {
                         attachments: [...card.attachments, data]
                     }
                 }
+                
                 return card;
             } );
         },

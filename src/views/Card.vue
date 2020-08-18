@@ -106,10 +106,12 @@
 
     import dateTime from '@/filters/dateTime';
     import TComment from "@/components/TComment";
-
+    
     export default {
         name: 'Card',
-
+        created(){
+            console.log(this.card)
+        },
         components: {
             TComment
         },

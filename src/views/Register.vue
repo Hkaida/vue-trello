@@ -5,7 +5,7 @@
         <div class="section-wrapper">
             <div class="account-form">
                 <h1>注册 Trello</h1>
-                <form id="login-form" method="POST" @submit.prevent="registerSumbit">
+                <form id="login-form" method="POST" @submit.prevent="registerSubmit">
                     <div>
                         <label>
                             <input v-model="user.name" class="form-field" autofocus="autofocus" placeholder="输入用户名"/>
