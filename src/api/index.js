@@ -100,7 +100,16 @@ export const putList = data => {
         }
     })
 };
-
+// 删除一个指定的列表
+export const deleteList = data => {
+    return axios({
+        method: 'delete',
+        url: '/list/' + data.id,
+        data: {
+            boardId: data.boardId,
+        }
+    })
+};
 
 // 获取一个指定列表下的所有卡片
 export const getCards = boardListId => {

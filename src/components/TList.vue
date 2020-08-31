@@ -6,7 +6,13 @@
             <div class="list-header" ref="listHeader">
                 <textarea class="form-field-input" ref="newBoardListName" @mousedown.prevent @blur="editListName">{{data.name}}</textarea>
                 <div class="extras-menu" @mousedown.prevent>
-                    <span class="icon icon-more"></span>
+                    <!-- 菜单 -->
+                    <!-- <span class="icon icon-more" @click="delList"></span> -->
+                    <t-popup title="操作" ref="tPopup">
+                        <span class="icon icon-more"></span>
+
+                        <t-popup-menu slot="content" :items="menuItems" @command="execute"></t-popup-menu>
+                    </t-popup>
                 </div>
             </div>
 
@@ -37,12 +43,16 @@
 
 <script>
     import TCard from '@/components/TCard';
+    import TPopup from "@/components/TPopup";
+    import TPopupMenu from "@/components/TPopupMenu";
 
     export default {
         name: 'TList',
 
         components: {
             TCard,
+            TPopup,
+            TPopupMenu
         },
 
         props: {
@@ -61,7 +71,10 @@
                     downElementX: 0,
                     downElementY: 0
                 },
-                listAdding: false
+                listAdding: false,
+                menuItems: [
+                    {name: '删除列表', command: 'delList'}
+                ]
             }
         },
 
@@ -198,6 +211,25 @@
                     } catch (e) {}
                 } else {
                     this.$refs.newListName.focus();
+                }
+            },
+
+            async delList(){
+                console.log('delList:'+this.data.id);
+                await this.$store.dispatch('list/deleteList', {
+                            boardId: this.data.boardId,
+                            id: this.data.id,
+                        });
+
+                        this.$message.success('删除成功');
+            },
+            execute(command) {
+                switch (command) {
+                    case 'delList':
+                        this.delList();
+                        break;
+                    default:
+                        break;
                 }
             }
         }

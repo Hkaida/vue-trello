@@ -30,6 +30,12 @@ export default {
                 }
                 return list;
             } );
+        },
+
+        delList: (state, data) => {
+            state.lists = state.lists.filter(list=>{
+                    return list.id !== data.id
+            });
         }
     },
 
@@ -64,6 +70,18 @@ export default {
                 let rs = await api.putList(data);
 
                 commit('updateList', data);
+
+                return rs;
+            } catch (e) {
+                throw e;
+            }
+        },
+
+        deleteList: async ({commit}, data) => {
+            try {
+                let rs = await api.deleteList(data);
+
+                commit('delList', data);
 
                 return rs;
             } catch (e) {
