@@ -7,7 +7,6 @@
                 <textarea class="form-field-input" ref="newBoardListName" @mousedown.prevent @blur="editListName">{{data.name}}</textarea>
                 <div class="extras-menu" @mousedown.prevent>
                     <!-- 菜单 -->
-                    <!-- <span class="icon icon-more" @click="delList"></span> -->
                     <t-popup title="操作" ref="tPopup">
                         <span class="icon icon-more"></span>
 
@@ -221,7 +220,7 @@
                             id: this.data.id,
                         });
 
-                        this.$message.success('删除成功');
+                this.$message.success('删除成功');
             },
             execute(command) {
                 switch (command) {

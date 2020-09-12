@@ -6,11 +6,22 @@
 
         <!--正文-->
         <main v-if="board">
-
-            <h2>
-                {{board.name}}
-            </h2>
-
+            <div class="board-header">
+            <!-- <h2  contenteditable="true" :style="{color:color}" class="form-field-input h2" ref="newBoardName" @blur="editBoardName" @focus="changeColor"> {{board.name}} </h2> -->
+                <!-- <textarea :style="{color:color}" class="form-field-input h2" ref="newBoardName" @blur="editBoardName" @focus="changeColor">{{board.name}}</textarea> -->
+                <input :style="{color:color}" class="form-field-input h2" ref="newBoardName" @blur="editBoardName" @focus="changeColor" :value="board.name" />
+                
+                <t-popup title="菜单" ref="tPopup">
+                    <a href="javascript:void(0)" class="btn btn-icon menu">
+                        <i class="icon icon-more"></i>
+                        <span class="txt">显示菜单</span>
+                    </a>
+    
+                    <t-popup-menu slot="content" :items="menuItems" @command="execute"></t-popup-menu>
+                </t-popup>
+                
+            </div>
+                
             <!--面板容器-->
             <div class="board">
 
@@ -66,18 +77,26 @@
 <script>
     import THeader from "@/components/THeader";
     import TList from '@/components/TList';
+    import TPopup from "@/components/TPopup";
+    import TPopupMenu from "@/components/TPopupMenu";
 
     export default {
         name: 'Board',
 
         components: {
             THeader,
-            TList
+            TList,
+            TPopup,
+            TPopupMenu
         },
 
         data() {
             return {
-                listAdding: false
+                listAdding: false,
+                color: '#fff',
+                menuItems: [
+                    {name: '删除面板', command: 'delBoard'}
+                ]
             }
         },
 
@@ -199,7 +218,61 @@
 
                 }
 
+            },
+            async editBoardName(){
+                console.log('编辑',this.board.id);
+                this.color = '#fff';
+                let {value, innerHTML} = this.$refs.newBoardName;
+                if (value !== innerHTML) {
+                    await this.$store.dispatch('board/putBoard', {
+                        id: this.board.id,
+                        name: value
+                    })
+                }
+                
+            },
+            changeColor(){
+                this.color = '#000';
+            },
+            execute(command) {
+                switch (command) {
+                    case 'delBoard':
+                        this.delBoard();
+                        break;
+                    default:
+                        break;
+                }
+            },
+            async delBoard(){
+                console.log('delBoard');
+                await this.$store.dispatch('board/deleteBoard', {
+                    id: this.board.id,
+                    });
+
+                this.$message.success('删除成功');
+                this.$router.push({ name: 'Home'});
             }
         }
     }
 </script>
+
+<style scoped>
+    .container{
+        *zoom: 1;
+        
+    }
+    .h2{
+        font-size: 20px;
+        margin: 5px 0;
+        width: 300px;
+        display:inline-block;
+    }
+    .board-header {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+    }
+    .menu {
+        top: 3px;
+    }
+</style>

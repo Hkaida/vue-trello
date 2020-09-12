@@ -460,7 +460,8 @@ board
 }
 #board main {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    
     position: relative;
     padding: 10px;
     height: 100%;
@@ -469,7 +470,9 @@ board
 #board main h2 {
     height: 32px;
     line-height: 32px;
-    color: white;
+    margin: 0;
+    box-sizing: border-box;
+    display: inline-block;
 }
 
 .board {

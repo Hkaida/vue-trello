@@ -70,7 +70,25 @@ export const postBoard = data => {
         data
     });
 };
-
+// 编辑一个指定的面板名称
+export const putBoard = data => {
+    return axios({
+        method: 'put',
+        url: '/board/' + data.id,
+        data: {
+            name: data.name
+        }
+    })
+};
+// 删除一个面板
+export const delBoard = data => {
+    return axios({
+        method: 'delete',
+        url: '/board/' + data.id,
+        data: {}
+    })
+};
+//列表-----------------------------------------
 // 获取一个指定面板下的所有列表集合
 export const getLists = boardId => {
     return axios({
