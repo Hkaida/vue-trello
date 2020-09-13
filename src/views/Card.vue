@@ -31,12 +31,14 @@
                         </div>
                         <div class="title-text">
                             <h3>描述</h3>
-                            <button class="btn btn-edit">编辑</button>
+                            <button class="btn btn-edit">
+                                <label for="describe" style="cursor: pointer;">编辑</label>
+                            </button>
                         </div>
                     </div>
 
                     <p class="description">
-                        <textarea class="form-field-input" @blur="editCardDescription">{{card.description}}</textarea>
+                        <textarea id="describe" class="form-field-input" @blur="editCardDescription">{{card.description}}</textarea>
                     </p>
 
                 </div>
