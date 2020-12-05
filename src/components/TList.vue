@@ -56,7 +56,7 @@
 
         props: {
             data: {
-                type: Object
+                type: Object  
             }
         },
 
@@ -117,10 +117,12 @@
                             this.drag.isDrag = true;
 
                             this.$refs.listPlaceholder.style.height = listElement.offsetHeight + 'px';
-
-                            listElement.style.position = 'absolute';
-                            listElement.style.zIndex = 99999;
-                            listElement.style.transform = 'rotate(5deg)';
+                            
+                            // 这里如果直接利用style改变transform和z-index，那么拖动完毕就要利用style再修改
+                            // 会导致列表往左拖动之后，点击弹出菜单，会被右边的列表阻挡
+                            listElement.classList.remove('isDown');
+                            listElement.classList.add('isMove');
+                           
                             document.body.appendChild(listElement);
 
                             this.$emit('dragStart', {
@@ -147,12 +149,14 @@
                         let listElement = this.$refs.list;
 
                         this.$refs.listPlaceholder.style.height = 0;
+                        
+                        // 同上
+                        listElement.classList.remove('isMove');
+                        listElement.classList.add('isDown');
 
-                        listElement.style.position = 'relative';
-                        listElement.style.zIndex = 0;
                         listElement.style.left = 0;
                         listElement.style.top = 0;
-                        listElement.style.transform = 'rotate(0deg)';
+                        
                         this.$el.appendChild(listElement);
 
                         this.$emit('dragEnd', {
@@ -234,3 +238,16 @@
         }
     }
 </script>
+
+<style scoped>
+    .isMove {
+        position: absolute;
+        z-index: 99999;
+        transform: rotate(5deg);
+    }
+
+    .isDown {
+        position: relative;
+        /* transform: rotate(0deg); */
+    }
+</style>

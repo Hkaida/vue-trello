@@ -9,9 +9,11 @@ const Register = () => import(/* webpackChunkName: "Register" */'../views/Regist
 const Login = () => import(/* webpackChunkName: "Login" */'../views/Login.vue');
 const NotFound = () => import(/* webpackChunkName: "NotFound" */'../views/NotFound.vue');
 
+
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
+
   {
     path: '/',
     name: 'Home',

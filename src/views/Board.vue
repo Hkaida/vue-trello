@@ -28,7 +28,7 @@
 
                 <!--面板列表容器-->
                 <t-list
-                    v-for="list of lists"
+                    v-for="list in lists"
                     :key="list.id"
                     :data="list"
 
@@ -95,7 +95,7 @@
                 listAdding: false,
                 color: '#fff',
                 menuItems: [
-                    {name: '删除面板', command: 'delBoard'}
+                    {name: '删除此看板', command: 'delBoard'}
                 ]
             }
         },
